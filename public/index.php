@@ -7,8 +7,8 @@ require '../vendor/autoload.php';
 $app = new \Slim\App;
 
 require '../src/config/db.php';
-require __DIR__ . '/../src/authMiddleware/ApiKeyAuthenticator.php';
-require __DIR__ . '/../src/authMiddleware/HttpBasicAuthenticator.php';
+require __DIR__ . '/../src/middlewares/AuthMiddleware.php';
+require __DIR__ . '/../src/middlewares/HttpBasicAuthenticator.php';
 
 $app->get('/test', function (Request $req, Response $res, array $args) {      
    return $res->getBody()->write("test success!");

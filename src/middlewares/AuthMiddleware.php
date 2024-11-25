@@ -1,8 +1,8 @@
 <?php
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use Slim\Middleware\HttpBasicAuthentication;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
+use Tuupola\Middleware\HttpBasicAuthentication;
 
 class AuthMiddleware {
     protected $db;
@@ -43,12 +43,12 @@ class AuthMiddleware {
             } else {
                 // Invalid API key, handle with HTTP Basic Authentication error
                 $errorResponse = $res->withStatus(401)->withJson(['error' => 'Invalid API Key']);
-                return $httpBasicAuth->process($req, $errorResponse, $next);
+                return $httpBasicAuth->__invoke($req, $errorResponse, $next);
             }
         }
 
         // If no API key provided or the database connection fails
         $errorResponse = $res->withStatus(401)->withJson(['error' => 'Authentication failed']);
-        return $httpBasicAuth->process($req, $errorResponse, $next);
+        return $httpBasicAuth->__invoke($req, $errorResponse, $next);
     }
 }
